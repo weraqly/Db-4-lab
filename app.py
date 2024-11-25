@@ -1,0 +1,42 @@
+"""
+2022
+apavelchak@gmail.com
+© Andrii Pavelchak
+"""
+
+import os
+
+from waitress import serve
+import yaml
+
+import my_project
+
+DEVELOPMENT_PORT = 1403
+PRODUCTION_PORT = 1403
+HOST = "0.0.0.0"
+DEVELOPMENT = "development"
+PRODUCTION = "production"
+FLASK_ENV = "FLASK_ENV"
+ADDITIONAL_CONFIG = "ADDITIONAL_CONFIG"
+
+
+
+
+if __name__ == '__main__':
+    flask_env = os.environ.get(FLASK_ENV, DEVELOPMENT).lower()
+    config_yaml_path = os.path.join(os.getcwd(), 'config', 'app.yml')
+
+    with open(config_yaml_path, "r", encoding='utf-8') as yaml_file:
+        config_data_dict = yaml.load(yaml_file, Loader=yaml.FullLoader)
+        additional_config = config_data_dict[ADDITIONAL_CONFIG]
+
+        if flask_env == DEVELOPMENT:
+            config_data = config_data_dict[DEVELOPMENT]
+            my_project.create_app(config_data, additional_config).run(port=DEVELOPMENT_PORT, debug=True)
+
+        elif flask_env == PRODUCTION:
+            config_data = config_data_dict[PRODUCTION]
+            serve(my_project.create_app(config_data, additional_config), host=HOST, port=PRODUCTION_PORT)
+
+        else:
+            raise ValueError(f"Check OS environment variable '{FLASK_ENV}'")
