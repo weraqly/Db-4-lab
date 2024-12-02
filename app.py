@@ -20,8 +20,6 @@ FLASK_ENV = "FLASK_ENV"
 ADDITIONAL_CONFIG = "ADDITIONAL_CONFIG"
 
 
-
-
 if __name__ == '__main__':
     flask_env = os.environ.get(FLASK_ENV, DEVELOPMENT).lower()
     config_yaml_path = os.path.join(os.getcwd(), 'config', 'app.yml')

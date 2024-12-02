@@ -10,7 +10,7 @@ class FoodMachine(db.Model, IDto):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
     gps_coordinates = db.Column(db.String(255), nullable=True)
-    address_machine_id = db.Column(db.Integer, db.ForeignKey("address_machine.id"), nullable=False)
+    address_machine_id = db.Column(db.Integer,  nullable=False)
 
     # Зв'язок до AddressMachine
     address_machine = relationship("AddressMachine", back_populates="food_machines")
