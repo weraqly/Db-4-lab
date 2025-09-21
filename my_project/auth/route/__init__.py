@@ -6,7 +6,7 @@ apavelchak@gmail.com
 
 from flask import Flask
 
-from .error_handler import err_handler_bp
+from my_project.auth.route.orders.error_handler import err_handler_bp
 
 
 def register_routes(app: Flask) -> None:
@@ -18,22 +18,21 @@ def register_routes(app: Flask) -> None:
     app.register_blueprint(err_handler_bp)
 
     # Import and register blueprints for each of your specific entities
-
-    from my_project.auth.route.adress_machine_route import address_machine_bp
-    from my_project.auth.route.currency_denomination_route import currency_denominations_bp
-    from my_project.auth.route.employees_address_route import employess_address_bp
-    from my_project.auth.route.employees_route import employees_bp
-    from my_project.auth.route.food_machine_route import food_machine_bp
-    from my_project.auth.route.loading_machine_route import loading_machine_bp
-    from my_project.auth.route.loading_snacks_route import loading_snacks_bp
-    from my_project.auth.route.machine_manifecture_route import machine_manifecture_bp
-    from my_project.auth.route.menu_route import menu_bp
-    from my_project.auth.route.money_loading_route import money_loading_bp
-    from my_project.auth.route.money_transfer_route import money_transfer_bp
-    from my_project.auth.route.saled_snacks_route import saled_snacks_bp
-    from my_project.auth.route.service_route import service_bp
-    from my_project.auth.route.snacks_creator_route import snacks_creator_bp
-    from my_project.auth.route.snacks_route import snacks_bp
+    from my_project.auth.route.orders.adress_machine_route import address_machine_bp
+    from my_project.auth.route.orders.currency_denomination_route import currency_denominations_bp
+    from my_project.auth.route.orders.employees_address_route import employess_address_bp
+    from my_project.auth.route.orders.employees_route import employees_bp
+    from my_project.auth.route.orders.food_machine_route import food_machine_bp
+    from my_project.auth.route.orders.loading_machine_route import loading_machine_bp
+    from my_project.auth.route.orders.loading_snacks_route import loading_snacks_bp
+    from my_project.auth.route.orders.machine_manifecture_route import machine_manifecture_bp
+    from my_project.auth.route.orders.menu_route import menu_bp
+    from my_project.auth.route.orders.money_loading_route import money_loading_bp
+    from my_project.auth.route.orders.money_transfer_route import money_transfer_bp
+    from my_project.auth.route.orders.saled_snacks_route import saled_snacks_bp
+    from my_project.auth.route.orders.service_route import service_bp
+    from my_project.auth.route.orders.snacks_creator_route import snacks_creator_bp
+    from my_project.auth.route.orders.snacks_route import snacks_bp
 
     # Register each blueprint with the app
     app.register_blueprint(address_machine_bp)

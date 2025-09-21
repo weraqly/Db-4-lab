@@ -4,6 +4,7 @@ import os
 from http import HTTPStatus
 import secrets
 from typing import Dict, Any
+from my_project.auth.route import register_routes
 
 from flask import Flask
 from flask_restx import Api, Resource
@@ -29,7 +30,6 @@ def create_app(app_config: Dict[str, Any], additional_config: Dict[str, Any]) ->
     _init_db(app)
 
     # Переносимо імпорт register_routes сюди, щоб уникнути циклічного імпорту
-    from my_project.auth.route import register_routes
     register_routes(app)
 
     _init_swagger(app)
