@@ -1,4 +1,3 @@
-# my_project/auth/routes/address_machine.py
 from __future__ import annotations
 
 from http import HTTPStatus
@@ -16,14 +15,14 @@ controller = AddressMachineController()
 @address_machine_bp.get("")
 def get_all_address_machines() -> Response:
     """
-    Отримати список всіх адрес автоматів
+    Retrieve the list of all address machines
     ---
     tags:
       - AddressMachine
     summary: List all address machines
     responses:
       200:
-        description: Список адрес
+        description: List of addresses
         schema:
           type: array
           items:
@@ -45,7 +44,7 @@ def get_all_address_machines() -> Response:
 @address_machine_bp.post("")
 def create_address_machine() -> Response:
     """
-    Створити нову адресу автомата
+    Create a new address machine
     ---
     tags:
       - AddressMachine
@@ -56,7 +55,7 @@ def create_address_machine() -> Response:
       - in: body
         name: body
         required: true
-        description: Дані адреси автомата (DTO)
+        description: Address machine DTO
         schema:
           type: object
           properties:
@@ -69,7 +68,7 @@ def create_address_machine() -> Response:
           required: [city, street, street_number, city_index, country]
     responses:
       201:
-        description: Створено
+        description: Created
         schema:
           type: object
           properties:
@@ -81,7 +80,7 @@ def create_address_machine() -> Response:
             city_index:    { type: integer }
             country:       { type: string }
       400:
-        description: Невірні дані
+        description: Invalid data
         schema:
           type: object
           properties:
@@ -117,7 +116,7 @@ def create_address_machine() -> Response:
         return make_response(jsonify({"errors": errors}), HTTPStatus.BAD_REQUEST)
 
     address = AddressMachine.create_from_dto(dto)
-    controller.create(address)  # очікується, що присвоюється id
+    controller.create(address)
 
     body = address.put_into_dto()
     resp = make_response(jsonify(body), HTTPStatus.CREATED)
@@ -131,7 +130,7 @@ def create_address_machine() -> Response:
 @address_machine_bp.get("/<int:id>")
 def get_address_machine(id: int) -> Response:
     """
-    Отримати адресу автомата за ID
+    Retrieve address machine by ID
     ---
     tags:
       - AddressMachine
@@ -141,10 +140,10 @@ def get_address_machine(id: int) -> Response:
         name: id
         type: integer
         required: true
-        description: Ідентифікатор адреси
+        description: Address identifier
     responses:
       200:
-        description: Знайдена адреса
+        description: Address found
         schema:
           type: object
           properties:
@@ -171,7 +170,7 @@ def get_address_machine(id: int) -> Response:
 @address_machine_bp.put("/<int:id>")
 def update_address_machine(id: int) -> Response:
     """
-    Оновити адресу автомата за ID
+    Update address machine by ID
     ---
     tags:
       - AddressMachine
@@ -183,11 +182,11 @@ def update_address_machine(id: int) -> Response:
         name: id
         type: integer
         required: true
-        description: Ідентифікатор адреси
+        description: Address identifier
       - in: body
         name: body
         required: true
-        description: Нові дані адреси (DTO)
+        description: New address data (DTO)
         schema:
           type: object
           properties:
@@ -199,7 +198,7 @@ def update_address_machine(id: int) -> Response:
             country:       { type: string,  example: "Ukraine" }
     responses:
       200:
-        description: Оновлено
+        description: Updated
         schema:
           type: object
           properties:
@@ -217,7 +216,7 @@ def update_address_machine(id: int) -> Response:
           properties:
             error: { type: string, example: "Address Machine not found" }
       400:
-        description: Невірні дані
+        description: Invalid data
     """
     existing = controller.find_by_id(id)
     if not existing:
@@ -244,11 +243,9 @@ def update_address_machine(id: int) -> Response:
     if errors:
         return make_response(jsonify({"errors": errors}), HTTPStatus.BAD_REQUEST)
 
-    # Створимо об'єкт для оновлення з частковим DTO
     updated_obj = AddressMachine.create_from_dto({**existing.put_into_dto(), **dto})
     controller.update(id, updated_obj)
 
-    # Повернемо оновлене DTO
     refreshed = controller.find_by_id(id)
     return make_response(jsonify(refreshed.put_into_dto() if refreshed else updated_obj.put_into_dto()), HTTPStatus.OK)
 
@@ -256,7 +253,7 @@ def update_address_machine(id: int) -> Response:
 @address_machine_bp.delete("/<int:id>")
 def delete_address_machine(id: int) -> Response:
     """
-    Видалити адресу автомата за ID
+    Delete address machine by ID
     ---
     tags:
       - AddressMachine
@@ -266,10 +263,10 @@ def delete_address_machine(id: int) -> Response:
         name: id
         type: integer
         required: true
-        description: Ідентифікатор адреси
+        description: Address identifier
     responses:
       204:
-        description: Видалено (без тіла відповіді)
+        description: Deleted (no response body)
       404:
         description: Address Machine not found
         schema:
@@ -282,5 +279,4 @@ def delete_address_machine(id: int) -> Response:
         return make_response(jsonify({"error": "Address Machine not found"}), HTTPStatus.NOT_FOUND)
 
     controller.delete(id)
-    # 204 — без тіла
     return make_response(("",), HTTPStatus.NO_CONTENT)
