@@ -17,7 +17,7 @@ from my_project import create_app
 # PRODUCTION = "production"
 # FLASK_ENV = "FLASK_ENV"
 # ADDITIONAL_CONFIG = "ADDITIONAL_CONFIG"
-
+#test action
 if __name__ == '__main__':
     app = create_app()
     serve(app, host="0.0.0.0", port=80)
