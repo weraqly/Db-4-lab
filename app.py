@@ -20,6 +20,7 @@ from my_project import create_app
 #test action
 #jsjsskskks
 #doal
+#lab
 
 if __name__ == '__main__':
     app = create_app()
