@@ -127,44 +127,44 @@ def create_address_machine() -> Response:
     return resp
 
 
-@address_machine_bp.get("/<int:id>")
-def get_address_machine(id: int) -> Response:
-    """
-    Retrieve address machine by ID
-    ---
-    tags:
-      - AddressMachine
-    summary: Get address machine by ID
-    parameters:
-      - in: path
-        name: id
-        type: integer
-        required: true
-        description: Address identifier
-    responses:
-      200:
-        description: Address found
-        schema:
-          type: object
-          properties:
-            id:            { type: integer }
-            city:          { type: string }
-            street:        { type: string }
-            street_number: { type: integer }
-            district:      { type: string }
-            city_index:    { type: integer }
-            country:       { type: string }
-      404:
-        description: Address Machine not found
-        schema:
-          type: object
-          properties:
-            error: { type: string, example: "Address Machine not found" }
-    """
-    address = controller.find_by_id(id)
-    if address:
-        return make_response(jsonify(address.put_into_dto()), HTTPStatus.OK)
-    return make_response(jsonify({"error": "Address Machine not found"}), HTTPStatus.NOT_FOUND)
+# @address_machine_bp.get("/<int:id>")
+# def get_address_machine(id: int) -> Response:
+#     """
+#     Retrieve address machine by ID
+#     ---
+#     tags:
+#       - AddressMachine
+#     summary: Get address machine by ID
+#     parameters:
+#       - in: path
+#         name: id
+#         type: integer
+#         required: true
+#         description: Address identifier
+#     responses:
+#       200:
+#         description: Address found
+#         schema:
+#           type: object
+#           properties:
+#             id:            { type: integer }
+#             city:          { type: string }
+#             street:        { type: string }
+#             street_number: { type: integer }
+#             district:      { type: string }
+#             city_index:    { type: integer }
+#             country:       { type: string }
+#       404:
+#         description: Address Machine not found
+#         schema:
+#           type: object
+#           properties:
+#             error: { type: string, example: "Address Machine not found" }
+#     """
+#     address = controller.find_by_id(id)
+#     if address:
+#         return make_response(jsonify(address.put_into_dto()), HTTPStatus.OK)
+#     return make_response(jsonify({"error": "Address Machine not found"}), HTTPStatus.NOT_FOUND)
 
 
 @address_machine_bp.put("/<int:id>")
