@@ -19,6 +19,8 @@ from my_project import create_app
 # ADDITIONAL_CONFIG = "ADDITIONAL_CONFIG"
 #test action
 #jsjsskskks
+#doal
+
 if __name__ == '__main__':
     app = create_app()
     serve(app, host="0.0.0.0", port=80)
