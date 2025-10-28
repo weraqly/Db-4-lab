@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists, create_database
 
@@ -7,14 +8,15 @@ from my_project.auth.route import register_routes
 from flasgger import Swagger
 
 db = SQLAlchemy()
+load_dotenv()
 
 
 def create_app():
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "default-secret-key")
+    app.config["SECRET_KEY"] = "SECRET_KEY"
 
     app.config['SWAGGER'] = {
         'title': 'My Project API',
